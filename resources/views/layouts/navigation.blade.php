@@ -16,6 +16,16 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('tweet.index')" :active="request()->routeIs('tweet.index')">
+                        {{ __('Index') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('tweet.create')" :active="request()->routeIs('tweet.create')">
+                        {{ __('Create') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -67,6 +77,18 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+        <!-- 🔽 一覧ページへのリンクを追加 -->
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('tweet.index')" :active="request()->routeIs('tweet.index')">
+                {{ __('Index') }}
+            </x-responsive-nav-link>
+        </div>
+        <!-- 🔽 作成ページへのリンクを追加 -->
+        <div class="pt-2 pb-3 space-y-1">
+             <x-responsive-nav-link :href="route('tweet.create')" :active="request()->routeIs('tweet.create')">
+                 {{ __('Create') }}
+            </x-responsive-nav-link>
+         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
