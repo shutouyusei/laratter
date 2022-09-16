@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tweet extends Model
 {
-    use HasFactory;
-    protected $guarded = [
+  use HasFactory;
+  protected $guarded = [
     'id',
     'created_at',
     'updated_at',
@@ -16,5 +16,13 @@ class Tweet extends Model
   public static function getAllOrderByUpdated_at()
   {
     return self::orderBy('updated_at', 'desc')->get();
+  }
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+  public function users()
+  {
+    return $this->belongsToMany(User::class)->withTimestamps();
   }
 }
