@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tweet;
 use App\Models\User;
-use Auth;
 
-class FollowController extends Controller
+class SearchController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // 🔽 空白削除
+        $keyword = trim($request->keyword);
+        $users = User::where('name', 'like', "%{$keyword}%")->pluck('id')->all();
+        $tweets = Tweet::query()
+            ->where('tweet', 'like', "%{$keyword}%")
+            ->orWhere('description', 'like', "%{$keyword}%")
+            ->orWhereIn('user_id', $users)
+            ->get();
+        return view('tweet.index', compact('tweets'));
     }
 
     /**
@@ -25,7 +33,7 @@ class FollowController extends Controller
      */
     public function create()
     {
-        //
+        return view('search.input');
     }
 
     /**
@@ -34,10 +42,9 @@ class FollowController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user)
+    public function store(Request $request)
     {
-        Auth::user()->followings()->attach($user->id);
-        return redirect()->back();
+        //
     }
 
     /**
@@ -48,14 +55,7 @@ class FollowController extends Controller
      */
     public function show($id)
     {
-        // ターゲットユーザのデータ
-        $user = User::find($id);
-        // ターゲットユーザのフォロワー一覧
-        $followers = $user->followers;
-        // ターゲットユーザのフォローしている人一覧
-        $followings  = $user->followings;
-
-        return view('user.show', compact('user', 'followers', 'followings'));
+        //
     }
 
     /**
@@ -87,9 +87,8 @@ class FollowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        Auth::user()->followings()->detach($user->id);
-        return redirect()->back();
+        //
     }
 }
