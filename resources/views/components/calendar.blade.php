@@ -27,3 +27,4 @@
         }
         @endphp
     </table>
+</div>
